@@ -3,12 +3,24 @@ let Message = require("../../schema/message");
 var messagehandler = {};
 
 messagehandler._msg = function(data, callback) {
-    let methods = ['post', 'delete', 'put'];
+    let methods = ['post', 'delete', 'put', 'get'];
     if(methods.indexOf(data.method) > -1){
         messagehandler._msg[data.method](data,callback);
     }else{
         callback(null, 404, "{msg : There is no handler for these route}");
     }
+}
+
+messagehandler._msg.get = function(data, callback){
+        Message.find({})
+        .populate("replies")
+        .then(msg => {
+            if(!msg) return callback(null, 404, "{msg: msg not found}");
+            callback(null, 200, JSON.stringify(msg));
+        })
+        .catch(ex => {
+            callback(ex);
+        })
 }
 
 messagehandler._msg.post = function(data, callback){

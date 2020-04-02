@@ -7,8 +7,6 @@ let router = require("./routes/routes");
 // load database Connection
 let db = require("./dbConnection/db");
 
-
-
 function startApp () {
         // connect to database
         db();
@@ -17,7 +15,7 @@ function startApp () {
         // get url
         let { pathname } = url.parse(req.url, true);
         // trim url
-        let trimmedUrl = pathname.replace(/\//, "");
+        let trimmedUrl = pathname.trim().replace(/\//, "");
         // get req method
         let method = req.method.toLowerCase();
 
