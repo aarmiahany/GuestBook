@@ -1,4 +1,5 @@
 let Message = require("../../schema/message");
+let authHelper = require("../../helpers/auth");
 
 var messagehandler = {};
 
@@ -12,6 +13,11 @@ messagehandler._msg = function(data, callback) {
 }
 
 messagehandler._msg.get = function(data, callback){
+  
+        // check is token is valid by auth helper function
+        authHelper(data, callback);
+
+        // find message
         Message.find({})
         .populate("replies")
         .then(msg => {
@@ -24,6 +30,10 @@ messagehandler._msg.get = function(data, callback){
 }
 
 messagehandler._msg.post = function(data, callback){
+
+     // check is token is valid by auth helper function
+     authHelper(data, callback);
+
     // get data paylaod
     const { content, author } = data.payload;
     if(!content || !author){
@@ -46,6 +56,10 @@ messagehandler._msg.post = function(data, callback){
 }
 
 messagehandler._msg.delete = function(data, callback){
+
+     // check is token is valid by auth helper function
+     authHelper(data, callback);
+
     // delete message by id
     // get id from payload
     let payload = data.payload;
@@ -65,6 +79,10 @@ messagehandler._msg.delete = function(data, callback){
 }
 
 messagehandler._msg.put = function(data, callback){
+
+     // check is token is valid by auth helper function
+     authHelper(data, callback);
+     
     const { id, content, author } = data.payload;
 
     if(!id){ return callback(null, 400, '{msg: id is missing}')}

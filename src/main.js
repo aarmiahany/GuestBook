@@ -18,9 +18,10 @@ function startApp () {
         let trimmedUrl = pathname.trim().replace(/\//, "");
         // get req method
         let method = req.method.toLowerCase();
-
+        // get req headers
+        let headers = req.headers;
         // gather all data together
-        let data = { trimmedUrl, method };
+        let data = { trimmedUrl, method, headers };
         
         // select which handler will handler the req
         let selectedHandler = router[trimmedUrl] ? router[trimmedUrl] : router['notFound'];
@@ -34,15 +35,19 @@ function startApp () {
 
         // when req is ending
         req.on("end", _ => {
-              // parse body data
-              let parsedData = JSON.parse(body);
+              // parse body data body data exits
+              let parsedData = body ? JSON.parse(body) : '';
               // inject payload to data obj  
               data.payload = parsedData;
                  // call the hadnler
               selectedHandler(data, (err, statusCode, msg, headerType) => {
+                    // handle err as first argument
                     if(err) throw err;
+                    // set Status code
                     res.statusCode = statusCode || 200;
+                    // set Response Header Type
                     res.setHeader(headerType || "Content-Type", "json/application");
+                    // end the response
                     res.end(msg);
                });
         });

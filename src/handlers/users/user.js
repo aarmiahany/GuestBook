@@ -1,9 +1,7 @@
 let User = require("../../schema/users");
-
 let tokenData = require("../../tokens/token");
 
 var userHandler = {};
-
 
 userHandler._users =  (data, callback) => {
     let methods = ['post'];
@@ -69,8 +67,7 @@ userHandler._loginUser.post = (data, callback) => {
                 return callback(null, 404, 'User Not Found');
             }
             if(user && user.isValidPassword(payload.password)){
-                callback(null, 200 , JSON.stringify({user, token: tokenData.__genToken__()}));
-
+                callback(null, 200 , JSON.stringify({user, token : tokenData.__genToken__(user.email)}));
             }else{
                 callback(null, 400, 'Wrong Password');
             }

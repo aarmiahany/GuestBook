@@ -4,25 +4,39 @@
 // import crypto module
 let crypto = require("crypto");
 
-// Array of tokens generated
+// Array of all tokens generated
 let allTokensGenerated = [];
 
 // define func that return the token
-let __genToken__ = _ => {
+let __genToken__ = email => {
+     
+      // in token object we will asign the user email as a payload
+      // gen salt
+      let salt = crypto.randomBytes(16).toString('hex'); 
+      // these function responsible for gen. the token
+      let tokenId = crypto.pbkdf2Sync(email, salt,  
+      1000, 64, `sha512`).toString(`hex`); 
 
-    // these function responsible for gen. the token
-    let token = crypto.randomBytes(16).toString('hex');
+      // set token expire Date
+      // the token is valid only for one hour
+      let issuedDate = Date.now() + 1000 * 60 * 60;
+      
+      // create token obj
+      let token = new Object();
+      token['tokenID'] = tokenId;
+      token['issuedDate'] = issuedDate;
 
-    allTokensGenerated.push(token);
-    console.log(allTokensGenerated);
+      // save the token in memory storage
+      allTokensGenerated.push(tokenId);
 
-    return token;
+      // return the token issued
+      return token;
 }
 
 
-let isVerifiedToken = token => {
-  return allTokensGenerated.indexOf(token) > - 1;
+let isValidToken = tokenID => {
+  return allTokensGenerated.indexOf(tokenID) > - 1;
 }
 
-module.exports = { __genToken__, isVerifiedToken};
+module.exports = { __genToken__, isValidToken};
 

@@ -1,5 +1,6 @@
 let Reply = require("../../schema/reply");
 let Message = require("../../schema/message");
+let auth = require("../../helpers/auth");
 
 let replayHandler = {};
 
@@ -11,6 +12,10 @@ replayHandler._reply = function(data, callback) {
 }
 
 replayHandler._reply.post = function(data, callback){
+
+     // check is token is valid by auth helper function
+     authHelper(data, callback);
+     
     // get payload from data obj
     const { content , author, id } = data.payload;
     // check if data exits
