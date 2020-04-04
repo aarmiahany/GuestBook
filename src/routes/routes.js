@@ -4,7 +4,7 @@ let replyHandler = require("../handlers/reply/reply");
 let notFound = require("../handlers/notFound/notFound");
 
 let router = {
-    'user/create': userHandler._users,
+    'user/create': userHandler._createUser,
     'user/login': userHandler._loginUser,
     'message': messageHandler._msg,
     'message/reply': replyHandler._reply,

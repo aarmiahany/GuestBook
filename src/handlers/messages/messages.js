@@ -83,14 +83,14 @@ messagehandler._msg.put = function(data, callback){
      // check is token is valid by auth helper function
      authHelper(data, callback);
      
-    const { id, content, author } = data.payload;
+    const { id, content } = data.payload;
 
     if(!id){ return callback(null, 400, '{msg: id is missing}')}
-    if(!content && !author) { return callback(null, 400, '{msg: data is missing}')}
+    if(!content) { return callback(null, 400, '{msg: data is missing}')}
 
     let payload = data.payload;
     
-    Message.findByIdAndUpdate({ _id: payload.id}, { content: payload.content, author: payload.author}, {new: true})
+    Message.findByIdAndUpdate({ _id: payload.id}, { content: payload.content }, {new: true})
     .then(msg => {
         if(!msg){ return callback(null, 404, "{msg: message with these id not found}")}
         callback(null, 200, JSON.stringify(msg));
