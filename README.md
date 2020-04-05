@@ -50,6 +50,6 @@ node_module --> The Exam says that not to use any third part or external librari
 -The Exam says that not to use any third part or external libraries and i did, However there is only one third part library i used it's Mongoose.js and it's for Connecting to mongodb atlas and defining collections models and making queries.
 -i preferred using mongodb as data storage choice than saving data in files using File System Module
 -i also preferred using mongoose than native mongodb as it more organized and there is a data validation before saving data.
-- Make sure when running the app it logged in console connected successfully but, if connection to MongoDB Failed please tell me this is for security reasons as you should change the IP address.
+- Make sure when running the app it logged in console connected successfully but, if connection to MongoDB Failed please tell me this is for security reasons as you should change the IP address or provide your url.
 
 
