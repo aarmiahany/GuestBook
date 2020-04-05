@@ -53,7 +53,7 @@ function startApp () {
               // set the content type for the res
               res.setHeader("Content-Type","application/json");
               // allow client side to fetch data (allow cross origin resource sharing)
-              res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+              res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
               // allowed headers
               res.setHeader("Access-Control-Allow-Headers", "*");
               // allowed methods
@@ -61,8 +61,7 @@ function startApp () {
                 "Access-Control-Allow-Methods",
                 "GET, POST, OPTIONS, PUT, PATCH, DELETE"
               );  
-              let code;
-              res.statusCode = code || 200;
+              res.statusCode = 200;
               // call the selcted handler to handler the incoming req
               selectedHandler(data, (err, code, msg) => {
                 // handle err in the first argument
